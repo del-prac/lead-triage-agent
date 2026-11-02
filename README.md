@@ -3,9 +3,24 @@
 First-pass routing of inbound website leads for Single Grain. Every row of the input CSV gets
 `QUALIFY`, `NURTURE`, `REJECT` or `ESCALATE`, a one-sentence reason and a 0-1 confidence, plus a track
 and the scores behind the call. **Escalations** (the leads a person must decide) are listed with their
-questions and options in `out/escalations.md`, and in the **Review: escalations** tab of the review UI.
+questions and options in `out/escalations.md`, and in the **Review** tab of the review UI.
 
 **Write-up:** [`WRITEUP.md`](WRITEUP.md) (the same text as submitted, [`WRITEUP.pdf`](WRITEUP.pdf)).
+
+## Repo map
+
+| Path | What it is |
+|---|---|
+| `triage/` | The agent: one module per pipeline step, plus the review UI |
+| `prompts/`, `rules.json` | Model instructions; every weight and threshold |
+| `fixtures/inbound_leads.csv` | The challenge fixture |
+| `out/` | **The submitted run** on the fixture (CLI backend) |
+| `out-api/` | The same fixture through the Anthropic API, as a consistency check |
+| `out-adversarial/`, `out-api-adversarial/` | Four extra attack rows (`tests/adversarial_leads.csv`), CLI and API |
+| `out-redteam/` | The 25-lead Codex red-team set (`tests/redteam_codex/`) after the fixes |
+| `runs/` | Every earlier design's output on the same inputs, oldest first (see Design history) |
+| `docs/` | The Codex review: its prompts and the audit report |
+| `tests/` | Deterministic tests, the attack rows, the red-team set and its key |
 
 Fixture checksum (`shasum -a 256 fixtures/inbound_leads.csv`):
 `cc1927ca771c37b186a2abdb7b9757594da79ec6dda074e5a514dd2761cc8599`
@@ -52,12 +67,12 @@ python -m triage.ui            # http://127.0.0.1:8012, reads out/ ; --out out-r
 ```
 
 One local page (standard library only, bound to 127.0.0.1 unless `--host` names a private address) with
-four tabs. **Leads**: filter by decision, track, value and credibility, sort by any column (value,
+four tabs, with a collapsible "How to use this page" panel above them. **Decisions**: filter by decision, track, value and credibility, sort by any column (value,
 highest first, by default); a toggle shows each lead's score breakdown, the model's evidence quotes, the
 injection-screen verdict and the message as submitted; an ESCALATE badge opens that lead's card.
-**Review: escalations**: one card per escalation (the question, what each answer leads to, first action,
-urgency), then the bad-faith batch list with deny / allow buttons that write `known_actors` in
-`rules.json`. **Source data**: every CSV row exactly as submitted beside its decision, sortable, to check
+**Review**: one card per escalation (the question, what each answer leads to, first action, urgency),
+then the bad-faith batch list with deny / allow buttons that write `known_actors` in `rules.json`, and
+the current deny and allow lists. **Source data**: every CSV row exactly as submitted beside its decision, sortable, to check
 the triage against the source. **Tune**:
 edit any weight or threshold and see, live, which decisions, scores and sales-queue positions change
 against the saved rules; Save writes `rules.json` and rewrites the run's output files on the spot (the
