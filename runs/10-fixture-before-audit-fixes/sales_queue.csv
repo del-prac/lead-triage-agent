@@ -1,0 +1,7 @@
+rank,lead_id,priority,track,value_score,company,budget,notes
+1,L-001,P1,sell_now,100,BrightCart,25000.0,has_followups:L-003
+2,L-007,P1,process,95,Continental Foods Group,50.0,"budget_conflict:confirm_$50,000_on_first_call"
+3,L-009,P1,sell_now,70,Tienda Verde,18000.0,
+4,L-017,P1,sell_now,70,NorthPeak Health,15000.0,regulated_industry
+5,L-014,P2,sell_now,60,Seedling,3000.0,
+6,L-016,P3,sell_now,38,Doyle HVAC,6000.0,

@@ -1,0 +1,26 @@
+lead_id,decision,track,reason,confidence,value_score,credibility_score,readiness,flags,review_queue
+R-001,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 75 ($14,000/mo budget +45, services: seo, aeo_geo +10, industry saas_software +10).",0.95,75,100,ready_now,track:sell_now,False
+R-002,NURTURE,growth,"Credible buyer below the $3,000 floor today; nurture toward it.",0.95,50,100,ready_now,track:growth,False
+R-003,ESCALATE,,Escalate: text in the lead tries to instruct an automated agent.,0.8,40,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+R-004,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 40 ($7,000/mo budget +20, source referral +10, small scale +5).",0.95,40,100,ready_now,track:sell_now,False
+R-005,ESCALATE,,Handling this request needs a compliance judgement that should not be automated.,0.85,50,100,,regulated_industry;sensitive;compliance_review,False
+R-006,NURTURE,readiness,"Fits and is buying, but asked not to be contacted by sales yet; honour that and send what they asked for.",0.95,60,100,evaluating,honour_no_contact;track:readiness,False
+R-007,ESCALATE,,Escalate: text in the lead tries to instruct an automated agent.,0.8,30,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+R-008,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 75 ($16,000/mo budget +45, services: paid_media, cro +10, source referral +10).",0.95,75,100,ready_now,regulated_industry;track:sell_now,False
+R-009,QUALIFY,process,"Meets the $3,000 floor and is actively selecting a vendor (sales process) (budget assumed $50,000 from conflicting fields; confirm on the first call); value 85 ($50,000/mo budget +55, enterprise scale +20, services: brand, demand_gen +10); credibility 85 (budget contradicts other fields -15).",0.72,85,85,evaluating,"budget_conflict:confirm_$50,000_on_first_call;track:process",False
+R-010,NURTURE,growth,"Credible buyer below the $3,000 floor today; nurture toward it.",0.95,13,100,ready_now,track:growth,False
+R-011,ESCALATE,,"The capture system produced a future timestamp (2027-01-12T10:10:00Z), so the row may be corrupted; verify it before acting (as captured it would be QUALIFY sell_now).",0.85,75,100,,future_timestamp;intake_integrity,False
+R-012,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 50 ($6,000/mo budget +20, industry saas_software +10, timeline now +10).",0.95,50,100,ready_now,track:sell_now,False
+R-013,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 35 ($9,000/mo budget +20, timeline now +10, services: seo +5).",0.95,35,100,ready_now,track:sell_now,False
+R-014,ESCALATE,,"A field starts with a spreadsheet formula, which would execute when the export is opened; it has been neutralised in the output, and the sender's identity should be verified before contact (as captured it would be QUALIFY sell_now).",0.85,90,100,,formula_injection;security_review,True
+R-015,NURTURE,readiness,"Meets the bar but is future, not ready to buy.",0.95,55,100,future,track:readiness,False
+R-016,ESCALATE,,"Escalate: $10,500 is an all-in figure including media spend, so the agency-fee portion is unknown and may be under the $3,000 floor; confirm it.",0.8,60,100,ready_now,blocks:all_in_budget,False
+R-017,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 65 ($15,000/mo budget +45, services: seo, content +10, industry saas_software +10).",0.95,65,100,ready_now,track:sell_now,False
+R-018,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 70 ($12,500/mo budget +45, industry saas_software +10, source referral +10).",0.95,70,100,ready_now,track:sell_now,False
+R-019,ESCALATE,,Handling this request needs a compliance judgement that should not be automated.,0.85,65,100,,sensitive;compliance_review,False
+R-020,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 45 ($4,500/mo budget +20, timeline now +10, services: seo +5).",0.95,45,100,ready_now,track:sell_now,False
+R-021,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 90 ($30,000/mo budget +55, services: brand, content, paid_media, social +15, industry marketplace +10).",0.95,90,100,ready_now,track:sell_now,False
+R-022,ESCALATE,,Escalate: email domain cobaltgrove.example and website cobalt-grove.example are near-identical but different (a typo or impersonation); verify before outreach.,0.8,55,75,ready_now,email_website_mismatch;lookalike_domain;blocks:lookalike_domain,False
+R-023,ESCALATE,,Handling this request needs a compliance judgement that should not be automated.,0.85,40,100,,regulated_industry;sensitive;compliance_review,False
+R-024,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 70 ($7,200/mo budget +20, services: demand_gen, content, social +15, industry saas_software +10).",0.95,70,100,ready_now,track:sell_now,False
+R-025,REJECT,,No budget.,0.95,0,100,exploring,,False

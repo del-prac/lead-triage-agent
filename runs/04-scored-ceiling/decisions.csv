@@ -1,0 +1,21 @@
+lead_id,decision,reason,confidence,value_score,credibility_score,flags,review_queue
+L-001,QUALIFY,"Value 100 ($25,000/mo budget +55, mid-market scale +15, services: paid_media, cro +10), credibility 100.",0.95,100,100,has_followups:L-003,False
+L-002,REJECT,"Not a buyer: a mentorship or career request, so there is no sales opportunity.",0.9,0,65,not_a_buyer,False
+L-003,QUALIFY,"Duplicate of L-001 (same person, same ask): route once via L-001, with this message appended to it.",0.95,,,duplicate_of:L-001;do_not_route_separately,False
+L-004,ESCALATE,Escalate: strong fit but no contact email; a human should try to recover contact details.,0.8,70,100,missing_email;blocks:no_contact_email,False
+L-005,NURTURE,"Value 20 (budget unknown +15, services: demand_gen +5), credibility 95 (unparseable budget -5).",0.71,20,95,unparseable_budget,False
+L-006,REJECT,"Text in the lead tries to instruct an automated agent (bad faith); on its own scores (value 5, credibility 100) it would only be NURTURE.",0.8,5,100,injection_attempt,True
+L-007,ESCALATE,"Escalate: budget fields disagree ($50 vs $25,000) and the label flips between NURTURE and QUALIFY.",0.8,40,95,blocks:budget_conflict,False
+L-008,ESCALATE,"Escalate: value 95 but credibility 40 (identity withheld -25, freemail email -15, missing company -10).",0.8,95,40,blocks:low_credibility_high_value,False
+L-009,QUALIFY,"Value 70 ($18,000/mo budget +45, services: seo, content +10, core vertical (E-commerce marketplace) +10), credibility 100.",0.71,70,100,non_english:es,False
+L-010,REJECT,Test or junk submission with no real request.,0.9,55,10,placeholder_budget;junk,True
+L-011,ESCALATE,"Another agency asking about pricing and deliverables, but value 60 is high enough that it may be buying for a client; a human should decide what to share.",0.7,60,100,competitor;possible_partner,True
+L-012,NURTURE,"Value 30 ($9,000/mo budget +20, services: social, content +10), credibility 95 (malformed timestamp -5).",0.55,30,95,malformed_timestamp,False
+L-013,REJECT,"Disposable email address plus an up-front request for methodology or client results, a fishing pattern rather than a buyer.",0.75,70,50,disposable_email;fishing,True
+L-014,NURTURE,"Value 59 ($3,000/mo budget +20, core vertical (Technology / startup (app)) +10, timeline now +10, capped because the budget is below the qualify floor), credibility 100.",0.57,59,100,,False
+L-015,REJECT,"Value 15 ($2,500/mo budget +5, small scale +5, services: seo +5), credibility 30 (identity withheld -25, education email -15, missing company -10).",0.71,15,30,resubmission_of:L-002,False
+L-016,NURTURE,"Value 30 ($6,000/mo budget +20, small scale +5, services: demand_gen +5), credibility 100.",0.55,30,100,,False
+L-017,QUALIFY,"Value 75 ($15,000/mo budget +45, services: demand_gen, ad_creative +10, source referral +10), credibility 100.",0.79,75,100,budget_normalized;regulated_industry,False
+L-018,ESCALATE,"Escalate: company and budget look real but the message is empty, so the need is unknown.",0.8,55,90,missing_message;blocks:no_stated_need,False
+L-019,ESCALATE,"Privacy or legal request, which needs whoever owns data and legal requests (often on a deadline), not sales triage.",0.9,0,20,sensitive,False
+L-020,REJECT,"Suspected phishing (payment pressure and/or a link to an executable); not a lead, flagged for security review and the link was not opened.",0.9,45,100,executable_link;insecure_website;security_review,True

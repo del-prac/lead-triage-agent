@@ -1,0 +1,28 @@
+{
+  "concerns": [
+    {
+      "lead_id": "L-011",
+      "current_decision": "REJECT",
+      "suggested_decision": "ESCALATE",
+      "concern": "Message says the comparison is 'for a client of ours' with a $30,000/mo budget on a verifiable company domain. That fits an agency buying on a client's behalf (a partner or white-label opportunity) as well as a competitor fishing for pricing. Unlike L-013 there is no disposable email or other bad-faith sign. Rejecting automatically risks losing a high-value deal; a human should decide and can hold back detailed pricing until the end client is confirmed."
+    },
+    {
+      "lead_id": "L-005",
+      "current_decision": "NURTURE",
+      "suggested_decision": "ESCALATE",
+      "concern": "The budget is unknown, not below the line. The prospect asks us to 'educate me' on cost, which is a request for a sales conversation that a marketing sequence may not answer. Confidence is low (0.59) and review_queue is false. Also, the unparseable_budget issue records 'we'll discuss', which doesn't match the message, so the source data should be checked."
+    },
+    {
+      "lead_id": "L-003",
+      "current_decision": "QUALIFY",
+      "suggested_decision": "QUALIFY",
+      "concern": "The reason says 'same person, same ask', but the follow-up adds new SEO interest that should be added to the L-001 record. Keeping it as a separate QUALIFY row also risks routing the same contact to sales twice despite the merge."
+    },
+    {
+      "lead_id": "L-006",
+      "current_decision": "REJECT",
+      "suggested_decision": "REJECT",
+      "concern": "Rejecting for the injection attempt is correct, but path shows only ['merits'] while the reason cites bad faith. The path should record the injection screen as the deciding route so later audits are accurate."
+    }
+  ]
+}

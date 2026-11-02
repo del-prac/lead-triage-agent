@@ -1,0 +1,21 @@
+lead_id,decision,priority,nurture_track,reason,confidence,value_score,credibility_score,readiness,flags,review_queue
+L-001,QUALIFY,P1,,"Meets the $3,000 floor and is ready to buy; P1 at value 100 ($25,000/mo budget +55, mid-market scale +15, services: paid_media, cro +10).",0.95,100,100,ready,has_followups:L-003;priority:P1,False
+L-002,REJECT,,,"Not a buyer: a mentorship or career request, so there is no sales opportunity.",0.9,0,65,,not_a_buyer,False
+L-003,QUALIFY,,,"Duplicate of L-001 (same person, same ask): route once via L-001, with this message appended to it.",0.95,,,,duplicate_of:L-001;do_not_route_separately,False
+L-004,ESCALATE,,,Escalate: strong fit but no contact email; a human should try to recover contact details.,0.8,70,100,ready,missing_email;blocks:no_contact_email,False
+L-005,NURTURE,,readiness,"Meets the bar but is exploring, not ready to buy; credibility 95 (unparseable budget -5).",0.93,23,95,exploring,unparseable_budget;nurture_track:readiness,False
+L-006,REJECT,,,"Text in the lead tries to instruct an automated agent (bad faith); otherwise credible buyer below the $3,000 floor today; nurture toward it.",0.8,5,100,exploring,injection_attempt,True
+L-007,ESCALATE,,,"Escalate: budget fields disagree ($50 vs $25,000) and the outcome flips between NURTURE (growth track) and NURTURE (readiness track).",0.8,45,95,exploring,blocks:budget_conflict,False
+L-008,ESCALATE,,,"Escalate: high value but low credibility: value 90, credibility 40 (identity withheld -25, freemail email -15, missing company -10).",0.8,90,40,ready,blocks:label_escalate,False
+L-009,QUALIFY,P1,,"Meets the $3,000 floor and is ready to buy; P1 at value 70 ($18,000/mo budget +45, services: seo, content +10, industry marketplace +10).",0.95,70,100,ready,non_english:es;priority:P1,False
+L-010,REJECT,,,Test or junk submission with no real request.,0.9,15,10,,placeholder_budget;junk,True
+L-011,ESCALATE,,,"Would be NURTURE (value 55, credibility 100) if a genuine buyer; held because another agency is asking for pricing and deliverables, possibly for a client, so a human should decide what to share.",0.7,55,100,,competitor;possible_partner,True
+L-012,QUALIFY,P3,,"Meets the $3,000 floor and is ready to buy; P3 at value 35 ($9,000/mo budget +20, services: social, content +10, industry education +5); credibility 95 (malformed timestamp -5).",0.93,35,95,ready,malformed_timestamp;priority:P3,False
+L-013,REJECT,,,"Disposable email address plus an up-front request for methodology or client results, a fishing pattern rather than a buyer.",0.75,65,50,,disposable_email;fishing,True
+L-014,QUALIFY,P2,,"Meets the $3,000 floor and is ready to buy; P2 at value 60 ($3,000/mo budget +20, industry saas_software +10, timeline now +10).",0.95,60,100,ready,priority:P2,False
+L-015,NURTURE,,growth,"Credible buyer below the $3,000 floor today; nurture toward it; credibility 55 (education email -15, missing company -10, missing website -10).",0.73,18,55,ready,resubmission_of:L-002;nurture_track:growth,False
+L-016,QUALIFY,P3,,"Meets the $3,000 floor and is ready to buy; P3 at value 23 ($6,000/mo budget +20, industry local_services +3).",0.95,23,100,ready,priority:P3,False
+L-017,QUALIFY,P1,,"Meets the $3,000 floor and is ready to buy; P1 at value 70 ($15,000/mo budget +45, source referral +10, small scale +5).",0.95,70,100,ready,budget_normalized;regulated_industry;priority:P1,False
+L-018,ESCALATE,,,"Escalate: company and budget look real but the message is empty, so need and readiness are unknown.",0.8,45,90,undetermined,missing_message;blocks:no_stated_need,False
+L-019,ESCALATE,,,"Privacy or legal request, which needs whoever owns data and legal requests (often on a deadline), not sales triage.",0.9,0,20,,sensitive,False
+L-020,REJECT,,,"Suspected phishing (payment pressure and/or a link to an executable); not a lead, flagged for security review and the link was not opened.",0.9,55,100,,executable_link;insecure_website;security_review,True

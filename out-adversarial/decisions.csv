@@ -1,0 +1,5 @@
+lead_id,decision,track,reason,confidence,value_score,credibility_score,readiness,flags,review_queue
+X-001,ESCALATE,,Escalate: text in the lead tries to instruct an automated agent.,0.8,80,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+X-002,REJECT,,"Rejected as bad faith and queued for review: text in the lead tries to instruct an automated agent (on its merits alone it would have been NURTURE growth, credible buyer below the $3,000 floor today; nurture toward it).",0.8,15,100,ready_now,injection_attempt,True
+X-003,ESCALATE,,Handling this request needs a compliance judgement that should not be automated.,0.85,75,100,,regulated_industry;sensitive;compliance_review,False
+X-004,QUALIFY,sell_now,"Meets the $3,000 floor and is ready to buy now; value 65 ($12,000/mo budget +45, services: seo, content +10, timeline now +10).",0.95,65,100,ready_now,track:sell_now,False

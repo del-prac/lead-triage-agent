@@ -1,0 +1,86 @@
+{
+  "_comment": "Operator-editable rules. Every weight and threshold is an ASSUMPTION or a BENCHMARK; see README 'Assumptions'. Re-running with cached LLM outputs costs nothing, so tune freely.",
+  "brief_version": "2026-07",
+  "budget": {
+    "floor": 3000,
+    "growth_nurture_min": 1,
+    "all_in_fee_share_min": 0.15,
+    "high_value_budget": 10000,
+    "scale_conflict_max": 1000,
+    "placeholder_min": 500000
+  },
+  "scoring": {
+    "thresholds": {
+      "value_escalate": 60,
+      "credibility_trusted": 60,
+      "credibility_floor": 40
+    },
+    "value": {
+      "budget_bands": [[25000, 55], [10000, 45], [3000, 20], [1, 5]],
+      "budget_zero": 0,
+      "budget_unknown": 15,
+      "scale": {"enterprise": 20, "mid_market": 15, "small": 5, "solo_or_micro": 0, "unknown": 0},
+      "per_service": 5,
+      "services_cap": 15,
+      "industry": {
+        "saas_software": 10, "ecommerce_dtc": 10, "marketplace": 10, "fintech": 10,
+        "healthcare": 5, "financial_services": 5, "legal": 5, "education": 5,
+        "local_services": 3, "cpg_retail": 5, "logistics": 3,
+        "agency_consulting": 0, "other": 0, "unknown": 0
+      },
+      "timeline": {"now": 10, "within_quarter": 5, "later": 0, "unknown": 0},
+      "budget_expected_to_grow": 5,
+      "source": {"referral": 10, "podcast": 5, "webinar": 5, "contact_form": 0}
+    },
+    "credibility": {
+      "start": 100,
+      "email_kind": {"company": 0, "freemail": -15, "education": -15, "disposable": -40, "placeholder": -60},
+      "email_website_mismatch": -15,
+      "lookalike_domain": -10,
+      "malformed_email": -20,
+      "missing_company": -10,
+      "missing_website": -10,
+      "missing_message": -10,
+      "identity_withheld": -25,
+      "budget_conflict": -15,
+      "placeholder_budget": -20,
+      "unparseable_budget": -5,
+      "malformed_timestamp": -5,
+      "resubmission_new_ask": -10,
+      "source": {"referral": 10},
+      "known_relationship": 20
+    },
+    "competitor_action": "ESCALATE"
+  },
+  "known_actors": {
+    "_comment": "Human-maintained. Match is on email or website domain. deny -> immediate REJECT + review queue; allow -> credibility bonus and the competitor gate is skipped (partners, existing clients).",
+    "deny": [],
+    "allow": []
+  },
+  "services": [
+    "seo", "aeo_geo", "paid_media", "ad_creative", "cro", "content",
+    "social", "demand_gen", "ai_implementation", "brand", "analytics"
+  ],
+  "injection_threshold": 0.5,
+  "_prices_comment": "USD per million tokens (input, output), Anthropic list prices; used only to report API-backend cost.",
+  "prices_per_mtok": {
+    "claude-haiku-5-5": [0.10, 0.50],
+    "claude-sonnet-5-5": [2.00, 10.00],
+    "claude-opus-5-5": [4.00, 20.00]
+  },
+  "models": {
+    "screen": "claude-haiku-5-5",
+    "extract": "claude-sonnet-5-5",
+    "audit": "claude-opus-5-5"
+  },
+  "freemail_domains": [
+    "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "icloud.com",
+    "aol.com", "proton.me", "protonmail.com", "live.com"
+  ],
+  "disposable_domains": [
+    "mailinator.com", "guerrillamail.com", "10minutemail.com", "tempmail.com",
+    "yopmail.com", "trashmail.com", "sharklasers.com"
+  ],
+  "placeholder_labels": ["example", "test", "asdf", "foo", "sample", "fake"],
+  "executable_extensions": [".exe", ".scr", ".msi", ".bat", ".cmd", ".js", ".vbs", ".jar", ".apk", ".dmg"]
+}

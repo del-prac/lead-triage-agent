@@ -1,0 +1,21 @@
+lead_id,decision,reason,confidence,flags,review_queue
+L-001,QUALIFY,"$25,000/mo budget is at or above the ~$10,000 qualify line.",0.85,,False
+L-002,REJECT,"Not a buyer: a mentorship or career request, so there is no sales opportunity.",0.9,not_a_buyer,False
+L-003,QUALIFY,"Duplicate of L-001 (same person, same ask), merged so it is not double-counted.",0.85,duplicate_of:L-001,False
+L-004,ESCALATE,Escalate: strong fit but no contact email; a human should try to recover contact details.,0.8,missing_email;blocks:strong_fit_but_no_contact_email;_a_human,False
+L-005,NURTURE,Real interest but no usable budget stated.,0.59,unparseable_budget,False
+L-006,REJECT,"Contains text trying to instruct an automated agent (bad faith), and on merits it would only be NURTURE ($500/mo budget is well below typical engagement size).",0.77,injection_attempt,True
+L-007,ESCALATE,Escalate: states enterprise scale but a $50 budget (likely entry error).,0.8,blocks:states_enterprise_scale_but_a_$50_budget,False
+L-008,ESCALATE,Escalate: high-value claims with no verifiable company.,0.8,blocks:high-value_claims_with_no_verifiable_com,False
+L-009,QUALIFY,"$18,000/mo budget is at or above the ~$10,000 qualify line.",0.85,non_english:es,False
+L-010,REJECT,Test or junk submission with no real request.,0.9,placeholder_budget;junk,True
+L-011,REJECT,"Another agency or consultant gathering pricing and deliverables for their own purposes, not a buyer.",0.8,competitor,True
+L-012,NURTURE,"$9,000/mo budget is below the ~$10,000 qualify line.",0.67,malformed_timestamp,False
+L-013,REJECT,"Disposable email address plus an up-front request for methodology or client results, a fishing pattern rather than a buyer.",0.75,disposable_email;fishing,True
+L-014,NURTURE,"$3,000/mo budget is below the ~$10,000 qualify line.",0.75,,False
+L-015,NURTURE,"$2,500/mo budget is well below typical engagement size.",0.51,resubmission_of:L-002,False
+L-016,NURTURE,"$6,000/mo budget is below the ~$10,000 qualify line.",0.75,,False
+L-017,QUALIFY,"$15,000/mo budget is at or above the ~$10,000 qualify line.",0.9,regulated_industry,False
+L-018,ESCALATE,"Escalate: company and budget look real but the message is empty, so the need is unknown.",0.8,missing_message;blocks:company_and_budget_look_real_but_the_mes,False
+L-019,ESCALATE,"Privacy or legal request, which needs whoever owns data and legal requests (often on a deadline), not sales triage.",0.9,sensitive,False
+L-020,REJECT,"Suspected phishing (payment pressure and/or a link to an executable); not a lead, flagged for security review and the link was not opened.",0.9,executable_link;insecure_website;security_review,True

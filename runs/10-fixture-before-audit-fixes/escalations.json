@@ -1,0 +1,481 @@
+{
+  "escalations": [
+    {
+      "lead_id": "L-004",
+      "submitted": {
+        "lead_id": "L-004",
+        "submitted_at": "2026-06-02T08:05:00Z",
+        "name": "Priya Natarajan",
+        "email": "",
+        "company": "Verdant Labs",
+        "website": "https://verdantlabs.com",
+        "monthly_budget_usd": "12000",
+        "message": "We need help with content strategy for a developer audience. Budget approved for Q3.",
+        "source": "webinar"
+      },
+      "why": "Escalate: strong fit but no contact email; a human should try to recover contact details.",
+      "cases": [
+        {
+          "question": "Can we find a contact email for Priya Natarajan at verdantlabs.com?",
+          "answers": {
+            "Contact recovered": "QUALIFY sell_now P1",
+            "No contact found": "REJECT: nobody to follow up with"
+          },
+          "action": "Check the website and LinkedIn for the named person; do not guess an address and email it blind.",
+          "urgency": "same day (strong fit)"
+        }
+      ],
+      "scores": {
+        "value": 70,
+        "credibility": 100
+      },
+      "value_breakdown": [
+        {
+          "signal": "$12,000/mo budget",
+          "points": 45
+        },
+        {
+          "signal": "services: content",
+          "points": 5
+        },
+        {
+          "signal": "industry saas_software",
+          "points": 10
+        },
+        {
+          "signal": "timeline within_quarter",
+          "points": 5
+        },
+        {
+          "signal": "source webinar",
+          "points": 5
+        }
+      ],
+      "credibility_breakdown": [],
+      "evidence": {
+        "request_type": "We need help with content strategy for a developer audience.",
+        "buying_stage": "We need help with content strategy for a developer audience. … Budget approved for Q3."
+      },
+      "flags": [
+        "missing_email",
+        "blocks:no_contact_email"
+      ]
+    },
+    {
+      "lead_id": "L-008",
+      "submitted": {
+        "lead_id": "L-008",
+        "submitted_at": "2026-06-03T14:11:00Z",
+        "name": "Rick Alvarez",
+        "email": "rickalvarez88@gmail.com",
+        "company": "",
+        "website": "",
+        "monthly_budget_usd": "40000",
+        "message": "VP of Growth at a Fortune 500 retailer. Can't share the company name yet. Ready to sign this week if the price is right.",
+        "source": "contact_form"
+      },
+      "why": "Escalate: high value but low credibility: value 90, credibility 40 (identity withheld -25, freemail email -15, missing company -10).",
+      "cases": [
+        {
+          "question": "Is this person who they say they are, at the company they describe?",
+          "answers": {
+            "Identity and company verified": "QUALIFY sell_now P1",
+            "Cannot verify": "REJECT: high-value claims we cannot stand behind"
+          },
+          "action": "Reply asking for the company name and a work email before any pricing or call.",
+          "urgency": "same day (high value if real)"
+        }
+      ],
+      "scores": {
+        "value": 90,
+        "credibility": 40
+      },
+      "value_breakdown": [
+        {
+          "signal": "$40,000/mo budget",
+          "points": 55
+        },
+        {
+          "signal": "enterprise scale",
+          "points": 20
+        },
+        {
+          "signal": "industry cpg_retail",
+          "points": 5
+        },
+        {
+          "signal": "timeline now",
+          "points": 10
+        }
+      ],
+      "credibility_breakdown": [
+        {
+          "signal": "freemail email",
+          "points": -15
+        },
+        {
+          "signal": "missing company",
+          "points": -10
+        },
+        {
+          "signal": "missing website",
+          "points": -10
+        },
+        {
+          "signal": "identity withheld",
+          "points": -25
+        }
+      ],
+      "evidence": {
+        "request_type": "VP of Growth at a Fortune 500 retailer",
+        "buying_stage": "Ready to sign this week if the price is right.",
+        "company_scale": "Fortune 500 retailer",
+        "identity_withheld": "Can't share the company name yet."
+      },
+      "flags": [
+        "blocks:label_escalate"
+      ]
+    },
+    {
+      "lead_id": "L-011",
+      "submitted": {
+        "lead_id": "L-011",
+        "submitted_at": "2026-06-04T15:37:00Z",
+        "name": "Sam Whitfield",
+        "email": "sam@apexdigitalpartners.com",
+        "company": "Apex Digital Partners",
+        "website": "https://apexdigitalpartners.com",
+        "monthly_budget_usd": "30000",
+        "message": "Curious how you structure retainers and what deliverables you include at each tier. Putting together a comparison for a client of ours.",
+        "source": "contact_form"
+      },
+      "why": "Would be NURTURE (value 55, credibility 100) if a genuine buyer; held because another agency is asking for pricing and deliverables, possibly for a client, so a human should decide what to share.",
+      "cases": [
+        {
+          "question": "Is this agency buying on behalf of a real client, or researching us?",
+          "answers": {
+            "Buying for a confirmed client": "NURTURE readiness",
+            "Researching us": "REJECT; consider adding the domain to known_actors.deny"
+          },
+          "action": "Reply with public information only (pricing is tailored) and ask who the end client is.",
+          "urgency": "normal"
+        }
+      ],
+      "scores": {
+        "value": 55,
+        "credibility": 100
+      },
+      "value_breakdown": [
+        {
+          "signal": "$30,000/mo budget",
+          "points": 55
+        }
+      ],
+      "credibility_breakdown": [],
+      "evidence": {
+        "request_type": "Curious how you structure retainers and what deliverables you include at each tier. Putting together a comparison for a client of ours.",
+        "buying_stage": "Curious how you structure retainers … Putting together a comparison for a client of ours."
+      },
+      "flags": [
+        "competitor",
+        "possible_partner"
+      ]
+    },
+    {
+      "lead_id": "L-012",
+      "submitted": {
+        "lead_id": "L-012",
+        "submitted_at": "2026-13-45T99:99:00Z",
+        "name": "Nora Haddad",
+        "email": "nora@finlitapp.com",
+        "company": "FinLit",
+        "website": "https://finlitapp.com",
+        "monthly_budget_usd": "9000",
+        "message": "We teach personal finance to Gen Z. Want help with TikTok and YouTube growth.",
+        "source": "contact_form"
+      },
+      "why": "The capture system produced an impossible timestamp (2026-13-45T99:99:00Z), so the row may be corrupted; verify it before acting (as captured it would be QUALIFY sell_now).",
+      "cases": [
+        {
+          "question": "The capture system produced an impossible value. Is this row intact, and is the form pipeline broken?",
+          "answers": {
+            "Row verified intact": "QUALIFY sell_now P3",
+            "Row corrupted": "recover the original submission, then re-run"
+          },
+          "action": "Check the form/CRM integration for this submission and others captured around the same time.",
+          "urgency": "same day (a capture fault may affect other leads)"
+        }
+      ],
+      "scores": {
+        "value": 30,
+        "credibility": 95
+      },
+      "value_breakdown": [
+        {
+          "signal": "$9,000/mo budget",
+          "points": 20
+        },
+        {
+          "signal": "services: social",
+          "points": 5
+        },
+        {
+          "signal": "industry education",
+          "points": 5
+        }
+      ],
+      "credibility_breakdown": [
+        {
+          "signal": "malformed timestamp",
+          "points": -5
+        }
+      ],
+      "evidence": {
+        "request_type": "Want help with TikTok and YouTube growth.",
+        "buying_stage": "Want help with TikTok and YouTube growth."
+      },
+      "flags": [
+        "malformed_timestamp",
+        "intake_integrity"
+      ]
+    },
+    {
+      "lead_id": "L-015",
+      "submitted": {
+        "lead_id": "L-015",
+        "submitted_at": "2026-06-05T17:44:00Z",
+        "name": "Marcus Lee",
+        "email": "marcus.lee.2027@stateuniv.edu",
+        "company": "",
+        "website": "",
+        "monthly_budget_usd": "2500",
+        "message": "Different ask than my last message - my family's restaurant group actually needs local SEO help and has budget. 4 locations.",
+        "source": "contact_form"
+      },
+      "why": "Escalate: budget evidence disagrees ($2,500 stated vs $10,000 from the budget read as per location (4 locations)) and credibility 40 is too low to assume the larger figure.",
+      "cases": [
+        {
+          "question": "Which budget is real?",
+          "answers": {
+            "The reason above names both figures": "confirm with the lead, then re-run"
+          },
+          "action": "Ask the lead to confirm their monthly budget.",
+          "urgency": "normal"
+        }
+      ],
+      "scores": {
+        "value": 18,
+        "credibility": 40
+      },
+      "value_breakdown": [
+        {
+          "signal": "$2,500/mo budget",
+          "points": 5
+        },
+        {
+          "signal": "small scale",
+          "points": 5
+        },
+        {
+          "signal": "services: seo",
+          "points": 5
+        },
+        {
+          "signal": "industry local_services",
+          "points": 3
+        }
+      ],
+      "credibility_breakdown": [
+        {
+          "signal": "education email",
+          "points": -15
+        },
+        {
+          "signal": "missing company",
+          "points": -10
+        },
+        {
+          "signal": "missing website",
+          "points": -10
+        },
+        {
+          "signal": "budget contradicts other fields",
+          "points": -15
+        },
+        {
+          "signal": "resubmission with a different ask",
+          "points": -10
+        }
+      ],
+      "evidence": {
+        "request_type": "my family's restaurant group actually needs local SEO help and has budget",
+        "buying_stage": "needs local SEO help and has budget",
+        "company_scale": "4 locations"
+      },
+      "flags": [
+        "resubmission_of:L-002",
+        "blocks:budget_conflict"
+      ]
+    },
+    {
+      "lead_id": "L-018",
+      "submitted": {
+        "lead_id": "L-018",
+        "submitted_at": "2026-06-06T14:33:00Z",
+        "name": "Ben Cutler",
+        "email": "ben.cutler@quorumdata.ai",
+        "company": "Quorum Data",
+        "website": "https://quorumdata.ai",
+        "monthly_budget_usd": "22000",
+        "message": "",
+        "source": "contact_form"
+      },
+      "why": "Escalate: company and budget look real but the message is empty, so need and readiness are unknown.",
+      "cases": [
+        {
+          "question": "What do they need, and are they ready to buy?",
+          "answers": {
+            "Specific need, ready now": "QUALIFY sell_now P2",
+            "Just exploring": "NURTURE readiness"
+          },
+          "action": "Send a short note asking what prompted the inquiry; the company and budget look real.",
+          "urgency": "within 1 business day"
+        }
+      ],
+      "scores": {
+        "value": 55,
+        "credibility": 90
+      },
+      "value_breakdown": [
+        {
+          "signal": "$22,000/mo budget",
+          "points": 45
+        },
+        {
+          "signal": "industry saas_software",
+          "points": 10
+        }
+      ],
+      "credibility_breakdown": [
+        {
+          "signal": "missing message",
+          "points": -10
+        }
+      ],
+      "evidence": {},
+      "flags": [
+        "missing_message",
+        "blocks:no_stated_need"
+      ]
+    },
+    {
+      "lead_id": "L-019",
+      "submitted": {
+        "lead_id": "L-019",
+        "submitted_at": "2026-06-07T08:19:00Z",
+        "name": "Hannah Vogel",
+        "email": "h.vogel@example.de",
+        "company": "",
+        "website": "",
+        "monthly_budget_usd": "0",
+        "message": "Please delete all personal data you hold about me under GDPR Article 17. I submitted a form on your site last year.",
+        "source": "contact_form"
+      },
+      "why": "Privacy or legal request, which needs whoever owns data and legal requests (often on a deadline), not sales triage.",
+      "cases": [
+        {
+          "question": "This is a privacy or legal request, not a sales lead. Who owns it, and has the clock started?",
+          "answers": {
+            "Routed to the privacy/legal owner": "handled outside sales; no sales follow-up"
+          },
+          "action": "Forward to the data-protection owner today and log the request date.",
+          "urgency": "high: statutory deadline (GDPR Art. 12: one month to respond)"
+        }
+      ],
+      "scores": {
+        "value": 0,
+        "credibility": 20
+      },
+      "value_breakdown": [],
+      "credibility_breakdown": [
+        {
+          "signal": "placeholder email",
+          "points": -60
+        },
+        {
+          "signal": "missing company",
+          "points": -10
+        },
+        {
+          "signal": "missing website",
+          "points": -10
+        }
+      ],
+      "evidence": {
+        "request_type": "Please delete all personal data you hold about me under GDPR Article 17.",
+        "needs_compliance_judgement": "Please delete all personal data you hold about me under GDPR Article 17."
+      },
+      "flags": [
+        "sensitive"
+      ]
+    }
+  ],
+  "bad_faith_review": [
+    {
+      "lead_id": "L-006",
+      "decision": "REJECT",
+      "why": "Text in the lead tries to instruct an automated agent (bad faith); otherwise credible buyer below the $3,000 floor today; nurture toward it.",
+      "flags": [
+        "injection_attempt"
+      ],
+      "entry": {
+        "domain": "pinnaclegrowth.co"
+      },
+      "if_allowed": "NURTURE growth",
+      "if_denied": "REJECT immediately on every future submission"
+    },
+    {
+      "lead_id": "L-010",
+      "decision": "REJECT",
+      "why": "Test or junk submission with no real request.",
+      "flags": [
+        "placeholder_budget",
+        "junk"
+      ],
+      "entry": {
+        "email": "asdf@asdf.com"
+      },
+      "if_allowed": "REJECT",
+      "if_denied": "REJECT immediately on every future submission"
+    },
+    {
+      "lead_id": "L-013",
+      "decision": "REJECT",
+      "why": "Disposable email address plus an up-front request for methodology or client results, a fishing pattern rather than a buyer.",
+      "flags": [
+        "disposable_email",
+        "fishing"
+      ],
+      "entry": {
+        "email": "jblake@mailinator.com"
+      },
+      "if_allowed": "QUALIFY process P2",
+      "if_denied": "REJECT immediately on every future submission"
+    },
+    {
+      "lead_id": "L-020",
+      "decision": "REJECT",
+      "why": "Suspected phishing (payment pressure and/or a link to an executable); not a lead, flagged for security review and the link was not opened.",
+      "flags": [
+        "executable_link",
+        "insecure_website",
+        "security_review"
+      ],
+      "entry": {
+        "domain": "fastpay-billing.net"
+      },
+      "if_allowed": "REJECT (phishing is never skipped)",
+      "if_denied": "REJECT immediately on every future submission"
+    }
+  ]
+}

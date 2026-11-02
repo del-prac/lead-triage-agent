@@ -1,0 +1,26 @@
+lead_id,decision,track,priority,reason,confidence,value_score,credibility_score,readiness,flags,review_queue
+R-001,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 75 ($14,000/mo budget +45, services: seo, aeo_geo +10, industry saas_software +10).",0.95,75,100,ready_now,priority:P1;track:sell_now,False
+R-002,NURTURE,growth,,"Credible buyer below the $3,000 floor today; nurture toward it.",0.95,50,100,ready_now,track:growth,False
+R-003,ESCALATE,,,Escalate: text in the lead tries to instruct an automated agent.,0.8,40,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+R-004,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 40 ($7,000/mo budget +20, source referral +10, small scale +5).",0.95,40,100,ready_now,priority:P2;track:sell_now,False
+R-005,ESCALATE,,,Handling this request needs a compliance judgement that should not be automated.,0.85,50,100,,regulated_industry;sensitive;compliance_review,False
+R-006,QUALIFY,process,P2,"Meets the $3,000 floor and is actively selecting a vendor (sales process); P2 at value 65 ($12,000/mo budget +45, industry saas_software +10, services: aeo_geo +5).",0.95,65,100,evaluating,priority:P2;track:process,False
+R-007,ESCALATE,,,Escalate: text in the lead tries to instruct an automated agent.,0.8,30,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+R-008,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 75 ($16,000/mo budget +45, services: paid_media, cro +10, source referral +10).",0.95,75,100,ready_now,regulated_industry;priority:P1;track:sell_now,False
+R-009,REJECT,,,No budget.,0.95,30,100,evaluating,,False
+R-010,NURTURE,growth,,"Credible buyer below the $3,000 floor today; nurture toward it.",0.95,15,100,ready_now,track:growth,False
+R-011,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 75 ($11,000/mo budget +45, services: content, paid_media +10, industry saas_software +10).",0.95,75,100,ready_now,priority:P1;track:sell_now,False
+R-012,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 40 ($6,000/mo budget +20, timeline now +10, services: ai_implementation +5).",0.95,40,100,ready_now,priority:P2;track:sell_now,False
+R-013,QUALIFY,sell_now,P3,"Meets the $3,000 floor and is ready to buy now; P3 at value 35 ($9,000/mo budget +20, timeline now +10, services: seo +5).",0.95,35,100,ready_now,priority:P3;track:sell_now,False
+R-014,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 90 ($13,000/mo budget +45, mid-market scale +15, services: paid_media, cro +10).",0.95,90,100,ready_now,priority:P1;track:sell_now,False
+R-015,NURTURE,readiness,,"Meets the bar but is future, not ready to buy.",0.95,55,100,future,track:readiness,False
+R-016,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 55 ($10,500/mo budget +45, services: paid_media +5, timeline within_quarter +5).",0.95,55,100,ready_now,priority:P2;track:sell_now,False
+R-017,ESCALATE,,,Escalate: text in the lead tries to instruct an automated agent.,0.8,65,100,ready_now,injection_attempt;blocks:injection_on_valuable_lead,True
+R-018,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 70 ($12,500/mo budget +45, industry saas_software +10, source referral +10).",0.95,70,100,ready_now,priority:P1;track:sell_now,False
+R-019,ESCALATE,,,Handling this request needs a compliance judgement that should not be automated.,0.85,65,100,,sensitive;compliance_review,False
+R-020,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 45 ($4,500/mo budget +20, timeline now +10, services: seo +5).",0.95,45,100,ready_now,priority:P2;track:sell_now,False
+R-021,QUALIFY,sell_now,P1,"Meets the $3,000 floor and is ready to buy now; P1 at value 95 ($30,000/mo budget +55, services: brand, content, paid_media, social +15, industry marketplace +10).",0.95,95,100,ready_now,priority:P1;track:sell_now,False
+R-022,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 55 ($8,000/mo budget +20, mid-market scale +15, services: cro, paid_media +10); credibility 85 (email website mismatch -15).",0.88,55,85,ready_now,email_website_mismatch;priority:P2;track:sell_now,False
+R-023,ESCALATE,,,Handling this request needs a compliance judgement that should not be automated.,0.85,40,100,,regulated_industry;sensitive;compliance_review,False
+R-024,QUALIFY,sell_now,P2,"Meets the $3,000 floor and is ready to buy now; P2 at value 65 ($7,200/mo budget +20, services: demand_gen, content +10, industry saas_software +10).",0.95,65,100,ready_now,priority:P2;track:sell_now,False
+R-025,REJECT,,,No budget.,0.95,0,100,exploring,,False

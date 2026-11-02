@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead Triage Review</title>
+<style>
+:root { --bg:#f7f7f5; --panel:#fff; --ink:#1d1d1b; --muted:#6b6b66; --line:#e2e2dc; --accent:#2f5bd3;
+  --q:#1f7a4d; --n:#8a6d1f; --r:#9b2c2c; --e:#5b3fb0; --chip:#efefea; }
+@media (prefers-color-scheme: dark) { :root { --bg:#16171a; --panel:#1f2024; --ink:#ececea; --muted:#a3a39d;
+  --line:#33343a; --accent:#7d9cf0; --q:#5fc493; --n:#d9b85a; --r:#e07a7a; --e:#a68ef0; --chip:#2a2b30; } }
+* { box-sizing:border-box; }
+body { margin:0; font:14px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--ink); }
+header { padding:14px 20px 8px; border-bottom:1px solid var(--line); }
+.titlerow { display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; }
+details.help { margin:8px 0; max-width:900px; }
+details.help summary { cursor:pointer; color:var(--accent); }
+details.help ul { margin:6px 0 4px; padding-left:20px; }
+details.help li { margin-bottom:4px; }
+.info { display:inline-block; margin-left:6px; color:var(--accent); cursor:help; font-size:13px; }
+.infotext { font-size:12px; color:var(--muted); margin:2px 0 6px; }
+.grid .field { display:flex; flex-direction:column; }
+h1 { font-size:16px; margin:0; }
+nav { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+nav button { background:var(--panel); border:1px solid var(--accent); padding:6px 14px; color:var(--accent); cursor:pointer; font:inherit; font-weight:600; border-radius:6px; }
+nav button:hover { background:var(--chip); }
+nav button.on { color:#fff; background:var(--accent); }
+main { padding:16px 20px; }
+.bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+select, input[type=number], input[type=search] { font:inherit; padding:4px 6px; border:1px solid var(--line); border-radius:6px; background:var(--panel); color:var(--ink); }
+input[type=number] { width:80px; }
+.scroll { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); }
+th, td { text-align:left; padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:12px; color:var(--muted); font-weight:600; white-space:nowrap; }
+th.sortable { cursor:pointer; user-select:none; }
+th.sortable:hover { color:var(--ink); }
+th .arrow { margin-left:4px; }
+td.wide { min-width:280px; }
+tr.detail td { background:var(--bg); }
+.badge { font-size:12px; font-weight:600; }
+a.badge { text-decoration:underline; cursor:pointer; }
+.QUALIFY { color:var(--q); } .NURTURE { color:var(--n); } .REJECT { color:var(--r); } .ESCALATE { color:var(--e); }
+.chip { display:inline-block; background:var(--chip); border-radius:4px; padding:1px 6px; margin:1px 3px 1px 0; font-size:12px; }
+pre { white-space:pre-wrap; word-break:break-word; margin:4px 0; font:12px/1.4 ui-monospace, monospace; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin-bottom:12px; }
+.card.flash { outline:2px solid var(--e); }
+.note { background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--e); border-radius:6px; padding:8px 12px; margin-bottom:12px; }
+.muted { color:var(--muted); }
+button.act { font:inherit; padding:4px 10px; border-radius:6px; border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer; }
+button.act.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+button.link { background:none; border:0; padding:0; color:var(--accent); cursor:pointer; font:inherit; text-decoration:underline; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:4px 16px; }
+.grid label { display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:13px; }
+h2 { font-size:15px; margin:18px 0 8px; }
+h3 { font-size:13px; margin:12px 0 4px; color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <div class="titlerow"><h1>Lead Triage Review</h1><span class="muted" id="status"></span></div>
+  <details class="help">
+    <summary>How to use this page</summary>
+    <ul>
+      <li><b>Decisions</b>: every lead with the agent's decision, track and scores. Filter, sort by any column (value, highest first, by default), and tick <i>Show rationale</i> to see why: the score breakdown, the model's quotes from the lead, the injection-screen verdict and the message as submitted.</li>
+      <li><b>Review</b>: the work a person does. First the <b>escalations</b>: each card says the question to answer and what each answer leads to. Then the <b>bad-faith batch list</b>: auto-rejected leads to deny or allow by sender, and the current deny and allow lists.</li>
+      <li><b>Source data</b>: the input CSV exactly as submitted, beside each decision, to check the triage against the source.</li>
+      <li><b>Tune</b>: change the weights and thresholds and see what moves: decisions, scores and the order of the sales queue. Hover or tap ⓘ for what each setting does. Nothing is saved until you press Save.</li>
+    </ul>
+  </details>
+  <nav>
+    <button data-tab="leads" class="on">Decisions</button>
+    <button data-tab="review" id="review-tab">Review</button>
+    <button data-tab="data">Source data</button>
+    <button data-tab="tune">Tune</button>
+  </nav>
+</header>
+<main>
+  <section id="leads">
+    <div class="note" id="esc-note"></div>
+    <div class="bar">
+      <select id="f-decision"><option value="">All decisions</option><option>QUALIFY</option><option>NURTURE</option><option>REJECT</option><option>ESCALATE</option></select>
+      <select id="f-track"><option value="">All tracks</option><option>sell_now</option><option>process</option><option>readiness</option><option>growth</option></select>
+      <label>Value ≥ <input type="number" id="f-value" value="0"></label>
+      <label>Credibility ≥ <input type="number" id="f-cred" value="0"></label>
+      <input type="search" id="f-text" placeholder="Search lead, company, reason">
+      <label><input type="checkbox" id="f-why"> Show rationale</label>
+    </div>
+    <p class="muted">Click any column heading to sort; click again to reverse. Sorted by value, highest first, to start.</p>
+    <div class="scroll" id="lead-table"></div>
+  </section>
+
+  <section id="review" hidden>
+    <h2>Escalations: leads a person must decide</h2>
+    <p class="muted">Each card states the question to answer and what each answer leads to, computed by re-running the agent's rules with that answer applied.</p>
+    <div id="esc"></div>
+    <h2>Secondary escalation: bad-faith batch review</h2>
+    <p class="muted">Auto-rejected as bad faith; lower urgency, reviewed in batches. Deny rejects this sender on every future submission; allow vouches for them (bad-faith checks skipped, phishing never). Both write to <code>known_actors</code> in rules.json and re-decide every lead.</p>
+    <div id="bad"></div>
+    <h2>Deny and allow lists</h2>
+    <p class="muted">The senders a person has already judged. Removing an entry re-decides every lead.</p>
+    <div id="actors"></div>
+  </section>
+
+  <section id="data" hidden>
+    <p class="muted">Every row of the input CSV exactly as submitted, beside the agent's decision, so the triage can be checked against the source. Click a heading to sort.</p>
+    <div class="scroll" id="data-table"></div>
+  </section>
+
+  <section id="tune" hidden>
+    <p class="muted">Change any weight or threshold. Every lead is re-decided by the agent's own policy on the cached model outputs; the Effect panel shows what moved against the saved rules. Value weights mostly change <i>scores and the sales-queue order</i>; thresholds and budget rules change <i>decisions</i>. Nothing is saved until you press Save.</p>
+    <div class="bar"><button class="act" id="reset">Reset to saved</button><button class="act primary" id="save">Save to rules.json</button></div>
+    <div id="form"></div>
+    <h2>Effect</h2><div id="effect" class="muted">No changes yet.</div>
+  </section>
+</main>
+<script>
+// Lead text is untrusted (it contains injection and formula attempts): everything is set via textContent.
+const $ = (s) => document.querySelector(s);
+function el(tag, text, cls) { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+let S = null, edited = null;
+const sortState = {};   // table id -> {key, dir}
+
+async function load() {
+  S = await (await fetch('/api/state')).json();
+  edited = JSON.parse(JSON.stringify(S.rules));
+  const n = S.escalations.length;
+  $('#esc-note').replaceChildren(el('span', `${n} lead(s) are escalated to a person. Their questions and options are in the `),
+    linkTo('Review', () => showTab('review')), el('span', ' tab.'));
+  $('#status').textContent = `${S.leads.length} leads`;
+  renderLeads(); renderReview(); renderData(); renderForm(); $('#effect').textContent = 'No changes yet.';
+}
+
+function linkTo(text, fn) { const b = el('button', text, 'link'); b.onclick = fn; return b; }
+function showTab(id) {
+  document.querySelectorAll('nav button').forEach(x => x.classList.toggle('on', x.dataset.tab === id));
+  ['leads', 'review', 'data', 'tune'].forEach(t => $('#' + t).hidden = t !== id);
+}
+function openCard(leadId) {
+  showTab('review');
+  const c = document.getElementById('card-' + leadId);
+  if (c) { c.scrollIntoView({behavior: 'smooth', block: 'start'}); c.classList.add('flash'); setTimeout(() => c.classList.remove('flash'), 1500); }
+}
+function parts(list) { return (list || []).map(p => `${p.signal} ${p.points > 0 ? '+' : ''}${p.points}`).join(', ') || 'none'; }
+function num(v) { const n = parseFloat(String(v).replace(/[$,]/g, '').replace(/k$/i, '000')); return isNaN(n) ? null : n; }
+
+// Sortable table: columns = [{key, label, get, cell?, wide?, numeric?}]
+function sortableTable(id, columns, rows, defaultSort, extraRow) {
+  const st = sortState[id] || (sortState[id] = {...defaultSort});
+  const col = columns.find(c => c.key === st.key) || columns[0];
+  const val = (r) => { const v = col.get(r); return col.numeric ? (num(v) ?? -Infinity) : String(v ?? '').toLowerCase(); };
+  const sorted = [...rows].sort((a, b) => { const x = val(a), y = val(b); return (x < y ? -1 : x > y ? 1 : 0) * (st.dir === 'asc' ? 1 : -1); });
+  const t = el('table'), head = el('tr');
+  for (const c of columns) {
+    const th = el('th', c.label, 'sortable');
+    if (c.key === st.key) th.append(el('span', st.dir === 'asc' ? '▲' : '▼', 'arrow'));
+    th.onclick = () => { st.dir = (st.key === c.key && st.dir === 'desc') ? 'asc' : 'desc'; st.key = c.key; rerender[id](); };
+    head.append(th);
+  }
+  t.append(head);
+  for (const r of sorted) {
+    const tr = el('tr');
+    for (const c of columns) { const td = el('td', null, c.wide ? 'wide' : ''); c.cell ? td.append(c.cell(r)) : td.textContent = String(c.get(r) ?? ''); tr.append(td); }
+    t.append(tr);
+    if (extraRow) { const x = extraRow(r, columns.length); if (x) t.append(x); }
+  }
+  return t;
+}
+const rerender = { 'lead-table': () => renderLeads(), 'data-table': () => renderData() };
+
+function decisionCell(L) {
+  if (L.decision === 'ESCALATE') { const a = el('a', 'ESCALATE ›', 'badge ESCALATE'); a.title = 'Open its card in the Review tab'; a.onclick = () => openCard(L.lead_id); return a; }
+  return el('span', L.decision, 'badge ' + L.decision);
+}
+
+function renderLeads() {
+  const dec = $('#f-decision').value, trk = $('#f-track').value, minV = +$('#f-value').value || 0, minC = +$('#f-cred').value || 0;
+  const q = $('#f-text').value.toLowerCase(), why = $('#f-why').checked;
+  const rows = S.leads.filter(L => {
+    const hay = `${L.lead_id} ${L.raw.company} ${L.raw.name} ${L.reason}`.toLowerCase();
+    return !((dec && L.decision !== dec) || (trk && L.track !== trk) || (L.value ?? 0) < minV || (L.credibility ?? 0) < minC || (q && !hay.includes(q)));
+  });
+  const cols = [
+    {key: 'lead', label: 'Lead', get: L => L.lead_id},
+    {key: 'company', label: 'Company', get: L => L.raw.company || '—'},
+    {key: 'budget', label: 'Budget (as submitted)', get: L => L.raw.monthly_budget_usd || '—', numeric: true},
+    {key: 'decision', label: 'Decision', get: L => L.decision, cell: decisionCell},
+    {key: 'track', label: 'Track', get: L => L.track || ''},
+    {key: 'value', label: 'Value', get: L => L.value ?? '', numeric: true},
+    {key: 'cred', label: 'Credibility', get: L => L.credibility ?? '', numeric: true},
+    {key: 'conf', label: 'Confidence', get: L => L.confidence, numeric: true},
+  ];
+  const extra = why ? (L, span) => {
+    const r = el('tr', null, 'detail'), td = el('td'); td.colSpan = span;
+    td.append(el('div', L.reason));
+    td.append(el('h3', 'Value')); td.append(el('div', parts(L.value_breakdown)));
+    td.append(el('h3', 'Credibility')); td.append(el('div', parts(L.credibility_breakdown)));
+    const ev = Object.entries(L.evidence || {}).filter(([, v]) => v);
+    if (ev.length) { td.append(el('h3', 'Model evidence (quotes from the lead)')); ev.forEach(([k, v]) => td.append(el('div', `${k}: "${v}"`))); }
+    const sc = L.screen || {}, llm = sc.llm || {};
+    td.append(el('h3', 'Injection screen'));
+    td.append(el('div', `patterns: ${(sc.regex_hits || []).map(h => h.match).join('; ') || 'none'} · model: ${llm.injection_probability ?? 'failed'}${llm.targets_agent ? ' (targets agent)' : ''}${llm.evidence ? ' — "' + llm.evidence + '"' : ''}`));
+    const fl = el('div'); (L.flags || []).forEach(f => fl.append(el('span', f, 'chip'))); td.append(el('h3', 'Flags')); td.append(fl);
+    td.append(el('h3', 'Message as submitted')); td.append(el('pre', L.raw.message || '(empty)'));
+    r.append(td); return r;
+  } : null;
+  $('#lead-table').replaceChildren(sortableTable('lead-table', cols, rows, {key: 'value', dir: 'desc'}, extra));
+}
+
+function renderData() {
+  const fields = Object.keys(S.leads[0]?.raw || {});
+  const cols = fields.map(f => ({key: 'raw:' + f, label: f, get: L => L.raw[f], wide: f === 'message', numeric: f === 'monthly_budget_usd'}));
+  cols.push({key: 'decision', label: 'Decision', get: L => L.decision, cell: decisionCell},
+            {key: 'track', label: 'Track', get: L => L.track || ''},
+            {key: 'value', label: 'Value', get: L => L.value ?? '', numeric: true},
+            {key: 'reason', label: 'Reason', get: L => L.reason, wide: true});
+  $('#data-table').replaceChildren(sortableTable('data-table', cols, S.leads, {key: 'raw:lead_id', dir: 'asc'}));
+}
+
+function renderReview() {
+  const esc = $('#esc'); esc.replaceChildren();
+  if (!S.escalations.length) esc.append(el('p', 'None.', 'muted'));
+  for (const c of S.escalations) {
+    const card = el('div', null, 'card'); card.id = 'card-' + c.lead_id;
+    card.append(el('strong', c.lead_id)); card.append(el('div', c.why, 'muted'));
+    for (const k of c.cases) {
+      card.append(el('h3', k.question));
+      const ul = el('ul'); Object.entries(k.answers).forEach(([a, o]) => ul.append(el('li', `If ${a} → ${o}`))); card.append(ul);
+      card.append(el('div', `First action: ${k.action}`)); card.append(el('div', `Urgency: ${k.urgency}`, 'muted'));
+    }
+    esc.append(card);
+  }
+  const bad = $('#bad'); bad.replaceChildren();
+  if (!S.bad_faith.length) bad.append(el('p', 'None.', 'muted'));
+  for (const b of S.bad_faith) {
+    const card = el('div', null, 'card');
+    card.append(el('strong', b.lead_id)); card.append(el('div', b.why, 'muted'));
+    card.append(el('div', `Entry: ${JSON.stringify(b.entry)} · if allowed → ${b.if_allowed} · if denied → ${b.if_denied}`));
+    const bar = el('div', null, 'bar');
+    for (const kind of ['deny', 'allow']) {
+      const btn = el('button', kind === 'deny' ? 'Deny sender' : 'Allow sender', 'act');
+      btn.disabled = !Object.keys(b.entry || {}).length;
+      btn.onclick = async () => {
+        await fetch('/api/known-actor', {method: 'POST', body: JSON.stringify({kind, entry: b.entry})});
+        $('#status').textContent = `${kind} list updated; decisions recomputed`; await load();
+      };
+      bar.append(btn);
+    }
+    const leave = el('button', 'Leave (one-off)', 'act'); leave.onclick = () => card.remove(); bar.append(leave);
+    card.append(bar); bad.append(card);
+  }
+  const actors = $('#actors'); actors.replaceChildren();
+  for (const kind of ['deny', 'allow']) {
+    const card = el('div', null, 'card');
+    card.append(el('strong', kind === 'deny' ? 'Deny list (rejected on sight)' : 'Allow list (vouched for)'));
+    const list = (S.known_actors[kind] || []);
+    if (!list.length) card.append(el('div', 'Empty.', 'muted'));
+    for (const entry of list) {
+      const row = el('div', null, 'bar');
+      row.append(el('span', JSON.stringify(entry)));
+      const rm = el('button', 'Remove', 'act');
+      rm.onclick = async () => {
+        await fetch('/api/known-actor-remove', {method: 'POST', body: JSON.stringify({kind, entry})});
+        $('#status').textContent = `removed from ${kind} list; decisions recomputed`; await load();
+      };
+      row.append(rm); card.append(row);
+    }
+    actors.append(card);
+  }
+}
+
+const GROUP_INFO = {
+  'scoring › thresholds': 'The lines that turn the two scores into decisions.',
+  'scoring › value': 'Points for what the lead is worth if it is real. Value orders the sales queue and decides whether a doubtful lead is worth escalating; on its own it does not qualify or reject anyone.',
+  'scoring › value › scale': 'Points by the company size the lead describes.',
+  'scoring › value › industry': 'Points by industry category, as classified by the model.',
+  'scoring › value › timeline': 'Points for how soon they want to start.',
+  'scoring › value › source': 'Points by how the lead arrived.',
+  'scoring › credibility': 'How far the row can be trusted. Starts at "start" and adds or subtracts per signal. Credibility decides whether the agent acts on a lead or a person checks it first.',
+  'scoring › credibility › email_kind': 'Points by the kind of email address used.',
+  'scoring › credibility › source': 'Credibility bonus by how the lead arrived (a referral is vouched for).',
+  'budget': 'Hard budget rules, in US dollars per month.',
+};
+const FIELD_INFO = {
+  value_escalate: 'A lead at or above this value whose credibility is under "credibility_trusted" is escalated instead of qualified.',
+  credibility_trusted: 'Below this, a high-value lead is escalated, and a conflicting budget is not read in the lead\'s favour.',
+  credibility_floor: 'Below this, the lead is rejected as untrustworthy.',
+  budget_bands: 'Points by monthly budget; the bracket shows the lowest budget in that band.',
+  budget_zero: 'Points for a stated budget of $0.',
+  budget_unknown: 'Points when no usable budget is given.',
+  per_service: 'Points for each service requested that the agency sells.',
+  services_cap: 'Maximum total points from services.',
+  budget_expected_to_grow: 'Points when the lead says its budget will grow.',
+  start: 'Credibility every lead starts with.',
+  known_relationship: 'Bonus for a sender on the allow list.',
+  floor: 'Minimum monthly budget to qualify. Credible buyers below it go to growth nurture.',
+  growth_nurture_min: 'Below the floor, budgets at or above this are nurtured; below it they are rejected unless the lead says it will grow.',
+  all_in_fee_share_min: 'Assumed minimum share of an all-in budget (one that includes ad spend) that is agency fees. If that share is under the floor, the lead is escalated.',
+  high_value_budget: 'A budget at or above this makes a lead worth a person\'s time even when contact details or the message are missing.',
+  scale_conflict_max: 'A budget at or below this from a mid-market or enterprise company is read as a likely entry error (meant in thousands).',
+  placeholder_min: 'Budgets at or above this are treated as placeholders, not real figures.',
+};
+function info(text) {
+  const wrap = el('span'), i = el('span', 'ⓘ', 'info'); i.title = text; i.tabIndex = 0;
+  const t = el('div', text, 'infotext'); t.hidden = true;
+  i.onclick = () => { t.hidden = !t.hidden; };
+  wrap.append(i); return [wrap, t];
+}
+
+function renderForm() {
+  const form = $('#form'); form.replaceChildren();
+  const walk = (obj, path) => {
+    const leaves = [], groups = [];
+    for (const [k, v] of Object.entries(obj)) {
+      if (k.startsWith('_')) continue;
+      if (typeof v === 'number') leaves.push([k, v]);
+      else if (Array.isArray(v) && v.every(x => Array.isArray(x) && x.length === 2)) v.forEach((pair, i) => leaves.push([`${k}[≥$${pair[0]}]`, pair[1], [...path, k, i, 1]]));
+      else if (v && typeof v === 'object' && !Array.isArray(v)) groups.push([k, v]);
+    }
+    if (leaves.length) {
+      const title = path.join(' › '), h = el('h3', title);
+      if (GROUP_INFO[title]) { const [i, t] = info(GROUP_INFO[title]); h.append(i); form.append(h, t); } else form.append(h);
+      const g = el('div', null, 'grid');
+      for (const [k, v, full] of leaves) {
+        const field = el('div', null, 'field'), lab = el('label'), name = el('span', k);
+        const base = k.replace(/\[.*$/, ''), inp = el('input'); inp.type = 'number'; inp.step = 'any'; inp.value = v;
+        const p = full || [...path, k];
+        inp.oninput = () => { setPath(edited, p, parseFloat(inp.value)); preview(); };
+        let tip = null;
+        if (FIELD_INFO[base]) { const [i, t] = info(FIELD_INFO[base]); name.append(i); tip = t; }
+        lab.append(name, inp); field.append(lab); if (tip) field.append(tip); g.append(field);
+      }
+      form.append(g);
+    }
+    groups.forEach(([k, v]) => walk(v, [...path, k]));
+  };
+  for (const key of Object.keys(edited)) walk(edited[key], [key]);
+}
+
+function setPath(obj, path, val) { let o = obj; for (const p of path.slice(0, -1)) o = o[p]; o[path[path.length - 1]] = val; }
+
+let timer = null;
+function preview() { clearTimeout(timer); timer = setTimeout(async () => {
+  const res = await (await fetch('/api/simulate', {method: 'POST', body: JSON.stringify(edited)})).json();
+  const out = $('#effect'); out.replaceChildren(); out.className = '';
+  const t = el('table'), h = el('tr'); ['Decision', 'Saved rules', 'Edited', 'Change'].forEach(x => h.append(el('th', x))); t.append(h);
+  for (const [k, c] of Object.entries(res.counts)) { const r = el('tr'); const d = c.after - c.before;
+    [k, c.before, c.after, d === 0 ? '' : (d > 0 ? '+' : '') + d].forEach(x => r.append(el('td', String(x)))); t.append(r); }
+  out.append(t);
+  const table = (heads, rows) => { const t2 = el('table'), hh = el('tr'); heads.forEach(x => hh.append(el('th', x))); t2.append(hh);
+    rows.forEach(cells => { const r = el('tr'); cells.forEach(x => r.append(el('td', String(x ?? '')))); t2.append(r); }); return t2; };
+  out.append(el('h2', `Decisions: ${res.changed.length} lead(s) change`));
+  if (res.changed.length) out.append(table(['Lead', 'Before', 'After', 'Reason now'], res.changed.map(c => [c.lead_id, c.before, c.after, c.reason])));
+  out.append(el('h2', `Scores: ${res.scores.length} lead(s) move`));
+  if (res.scores.length) out.append(table(['Lead', 'Value before', 'Value after', 'Credibility before', 'Credibility after'],
+    res.scores.map(s => [s.lead_id, s.value[0], s.value[1], s.credibility[0], s.credibility[1]])));
+  const qb = res.queue.before, qa = res.queue.after, same = JSON.stringify(qb) === JSON.stringify(qa);
+  out.append(el('h2', `Sales queue order (QUALIFY, highest value first): ${same ? 'unchanged' : 'changed'}`));
+  const len = Math.max(qb.length, qa.length);
+  out.append(table(['#', 'Saved rules', 'Edited'], Array.from({length: len}, (_, i) => [i + 1, qb[i] || '', qa[i] || ''])));
+}, 250); }
+
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+['#f-decision', '#f-track', '#f-value', '#f-cred', '#f-text', '#f-why'].forEach(s => $(s).addEventListener('input', renderLeads));
+$('#reset').onclick = () => { edited = JSON.parse(JSON.stringify(S.rules)); renderForm(); $('#effect').textContent = 'No changes yet.'; };
+$('#save').onclick = async () => { await fetch('/api/save-rules', {method: 'POST', body: JSON.stringify(edited)}); $('#status').textContent = 'Saved to rules.json; decisions and output files updated'; await load(); };
+load();
+</script>
+</body>
+</html>

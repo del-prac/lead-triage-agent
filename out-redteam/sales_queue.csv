@@ -1,0 +1,12 @@
+rank,lead_id,track,value_score,company,budget,notes
+1,R-021,sell_now,90,Tin Spire,30000.0,
+2,R-009,process,85,Blue Harbor Robotics,0.0,"budget_conflict:confirm_$50,000_on_first_call"
+3,R-001,sell_now,75,OrbitLoom,14000.0,
+4,R-008,sell_now,75,Vellum Health,16000.0,regulated_industry
+5,R-018,sell_now,70,Sunward Labs,12500.0,
+6,R-024,sell_now,70,BrackenWave,7200.0,
+7,R-017,sell_now,65,GlintWorks,15000.0,
+8,R-012,sell_now,50,Thornfield Systems,6000.0,
+9,R-020,sell_now,45,Pineglass Learning,4500.0,
+10,R-004,sell_now,40,Paper Kite Studio,7000.0,
+11,R-013,sell_now,35,OpalGrid,9000.0,
